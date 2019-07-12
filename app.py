@@ -1,5 +1,6 @@
 from PIL import ImageFont, ImageDraw, Image
 
+import argparse
 
 def genOneLetterAvatar(letter):
     image_size = 1024
@@ -13,4 +14,31 @@ def genOneLetterAvatar(letter):
     image.show()
     
     
-genOneLetterAvatar('A')
+def genTwoLettersAvatar(letter1, letter2):
+    print("not yet ready")
+    print("letters: {} and {}".format(letter1, letter2))
+
+
+if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--l1',
+        help='first letter of the avatar',
+        default ='A',
+        required=True
+    )
+    parser.add_argument(
+        '--l2',
+        help='second letter of the avatar',
+        default =''
+    )
+    args = parser.parse_args()
+    
+    
+    if not args.l2:
+        genOneLetterAvatar(args.l1)
+    else:
+        genTwoLettersAvatar(args.l1, args.l2)
+        
+    
