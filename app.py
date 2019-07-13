@@ -5,43 +5,39 @@ from random import randint
 #import argparse
 
 IMAGE_SIZE = 1024
-color_list = ["#5d3578", "#76347a", "#b04285", "#db497d", "#e76e50"]
-
+BKG_COLORS = ["#5d3578", "#76347a", "#b04285", "#db497d", "#e76e50","#60487b","#4c7fa2","#4ca29b","#5baf76","#8fb76b","#b4b76b","#b7946b","#b7706b"]
+FONT_COLOR = '#ffffff'
+FONT_STYLE = "fonts/UbuntuMono-Bold.ttf"
 
 def getRandomColor():
-    return color_list[randint(0,len(color_list)-1)]
+    return BKG_COLORS[randint(0,len(BKG_COLORS)-1)]
 
-def genOneLetterAvatar(letter):
+def generateLetterAvatar(letter1, letter2='', shadow=True):
     font_size = 1228 
-    font_color = getRandomColor()
-    bkg_color = '#dddddd'
-    image = Image.new('RGBA', (IMAGE_SIZE,IMAGE_SIZE), font_color)
+    text_x = 203
+    text_y = -128
+    text = letter1.upper()+letter2.upper()
+    if letter2:
+        font_size = 800 
+        text_x = 103
+        text_y = 90
+    image = Image.new('RGBA', (IMAGE_SIZE,IMAGE_SIZE), getRandomColor())
     d = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/UbuntuMono-Bold.ttf", font_size)
-    d.text((203, -128), letter.upper(), font=font, fill=bkg_color)
+    font = ImageFont.truetype(FONT_STYLE, font_size)
+    font2 = ImageFont.truetype(FONT_STYLE, font_size)
+    if shadow:
+        for i in range(1,700):
+            d.text((text_x+i,text_y+i), text, font=font2, fill="#444444")
+    d.text((text_x,text_y), text, font=font, fill=FONT_COLOR)
     image.show()
     
-    
-def genTwoLettersAvatar(letter1, letter2):
-    font_size = 800
-    font_color = getRandomColor()
-    bkg_color = '#dddddd'
-    image = Image.new('RGBA', (IMAGE_SIZE,IMAGE_SIZE), font_color)
-    d = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/UbuntuMono-Bold.ttf", font_size)
-    d.text((103, 90), letter1.upper()+letter2.upper(), font=font, fill=bkg_color)
-    image.show()
-
 
 if __name__ == "__main__":
-    
-    
-    print(sys.argv)
-    
+        
     if(len(sys.argv)>2):
-        genTwoLettersAvatar(sys.argv[1][0], sys.argv[2][0])
+        generateLetterAvatar(sys.argv[1][0], sys.argv[2][0])
     else:
-        genOneLetterAvatar(sys.argv[1][0])      # first letter of 
+        generateLetterAvatar(sys.argv[1][0])      # first letter of 
     
 #    print(sys.argv[1])
 #    print(sys.argv[2])
