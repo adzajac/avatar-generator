@@ -5,10 +5,13 @@ import colorsys
 
 #import argparse
 
-MAX_IMAGE_SIZE = 1024
+IMAGE_SIZE = 512
 BKG_COLORS = ["#5d3578", "#76347a", "#b04285", "#db497d", "#e76e50","#60487b","#4c7fa2","#4ca29b","#5baf76","#8fb76b","#b4b76b","#b7946b","#b7706b"]
-FONT_COLOR = '#ffffff'
 FONT_STYLE = "fonts/UbuntuMono-Bold.ttf"
+FONT_COLOR = '#ffffff'
+SHADOW = True
+SHADOW_STEP = 1     # can be increased to speed up shadow generation,
+
 
 def hex_to_rgb(h):
     ''' h in format: #ffffff ; this function returns tuple of three (r,g,b) '''
@@ -27,23 +30,33 @@ def makeColorDarker(color_hex):
     v = max(v-0.1, 0)       # making it darker, but not to get negative number
     return rgb_to_hex(colorsys.hsv_to_rgb(h,s,v))
 
-def generateLetterAvatar(letter1, letter2='', shadow=True):
-    font_size = 1228 
-    text_x = 203
-    text_y = -128
+def generateLetterAvatar(letter1, letter2=''):
     text = letter1.upper()+letter2.upper()
     bkg_color=getRandomColor()
-    if letter2:
-        font_size = 800 
-        text_x = 103
-        text_y = 90
-    image = Image.new('RGBA', (MAX_IMAGE_SIZE,MAX_IMAGE_SIZE), bkg_color)
+    if letter2:         # two letters
+        font_size = int(IMAGE_SIZE/1.28)
+        text_x = int(IMAGE_SIZE/10)
+        text_y =int(IMAGE_SIZE/12.8)
+        #   size = 800
+        #   text_x = 103
+        #   text_y = 90
+    else:         # one letter avatar
+        font_size = int(IMAGE_SIZE*1.2)
+        text_x = int(IMAGE_SIZE/5)
+        text_y = int(-IMAGE_SIZE/8)
+        #    font_size = 1228
+        #    text_x = 203
+        #    text_y = -128
+        
+        
+    image = Image.new('RGBA', (IMAGE_SIZE,IMAGE_SIZE), bkg_color)
     d = ImageDraw.Draw(image)
     font = ImageFont.truetype(FONT_STYLE, font_size)
     font2 = ImageFont.truetype(FONT_STYLE, font_size)
-    if shadow:
-        for i in range(1,700):
-            d.text((text_x+i,text_y+i), text, font=font2, fill=makeColorDarker(bkg_color))
+    if SHADOW:
+        shadow_length = int(IMAGE_SIZE/1.6) 
+        for i in range(1,int(shadow_length/SHADOW_STEP)):
+            d.text((text_x+i*SHADOW_STEP,text_y+i*SHADOW_STEP), text, font=font2, fill=makeColorDarker(bkg_color))
     d.text((text_x,text_y), text, font=font, fill=FONT_COLOR)
     image.show()
     
