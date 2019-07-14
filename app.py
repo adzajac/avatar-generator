@@ -1,6 +1,6 @@
 from PIL import ImageFont, ImageDraw, Image
 import sys
-from random import randint
+from random import randint, random
 import colorsys
 
 #import argparse
@@ -10,25 +10,32 @@ BKG_COLORS = ["#5d3578", "#76347a", "#b04285", "#db497d", "#e76e50","#60487b","#
 FONT_STYLE = "fonts/UbuntuMono-Bold.ttf"
 FONT_COLOR = '#ffffff'
 SHADOW = True
-SHADOW_STEP = 1     # can be increased to speed up shadow generation,
+SHADOW_STEP = 1     # can be increased to speed up shadow generation (but with lower quality)
 
 
 def hex_to_rgb(h):
-    ''' h in format: #ffffff ; this function returns tuple of three (r,g,b) '''
+    ''' takes hex in format: #ffffff ; returns tuple of three (r,g,b) '''
     return tuple([int(i,16)/256 for i in [h[1:3], h[3:5], h[5:7]]])
 
 def rgb_to_hex(rgb):
-    ''' tuple (r,g,b) to hex in format #ffffff '''
+    ''' takes tuple (r,g,b), returns in hex format #ffffff '''
     return "#{:02x}{:02x}{:02x}".format(int(rgb[0]*256),int(rgb[1]*256),int(rgb[2]*256))
     
 def getRandomColor():
-    return BKG_COLORS[randint(0,len(BKG_COLORS)-1)]
+    h = random()
+    s = 0.41
+    v = 0.61
+    return rgb_to_hex(colorsys.hsv_to_rgb(h,s,v))
+#    return BKG_COLORS[randint(0,len(BKG_COLORS)-1)]
 
-def makeColorDarker(color_hex):
+def makeColorHexDarker(color_hex):
     r,g,b = hex_to_rgb(color_hex)
     h,s,v = colorsys.rgb_to_hsv(r,g,b)
-    v = max(v-0.1, 0)       # making it darker, but not to get negative number
+    h,s,v = makeHSVDarker(h,s,v)
     return rgb_to_hex(colorsys.hsv_to_rgb(h,s,v))
+
+def makeHSVDarker(h,s,v):   
+    return h,s,max(v-0.2, 0)    # making it darker, but making sure not to get negative number
 
 def generateLetterAvatar(letter1, letter2=''):
     text = letter1.upper()+letter2.upper()
@@ -56,7 +63,7 @@ def generateLetterAvatar(letter1, letter2=''):
     if SHADOW:
         shadow_length = int(IMAGE_SIZE/1.6) 
         for i in range(1,int(shadow_length/SHADOW_STEP)):
-            d.text((text_x+i*SHADOW_STEP,text_y+i*SHADOW_STEP), text, font=font2, fill=makeColorDarker(bkg_color))
+            d.text((text_x+i*SHADOW_STEP,text_y+i*SHADOW_STEP), text, font=font2, fill=makeColorHexDarker(bkg_color))
     d.text((text_x,text_y), text, font=font, fill=FONT_COLOR)
     image.show()
     
