@@ -37,7 +37,7 @@ def makeColorHexDarker(color_hex):
 def makeHSVDarker(h,s,v):   
     return h,s,max(v-0.2, 0)    # making it darker, but making sure not to get negative number
 
-def generateLetterAvatar(letter1, letter2=''):
+def generateLetterAvatar(letter1, letter2='', size=IMAGE_SIZE):
     text = letter1.upper()+letter2.upper()
     bkg_color=getRandomColor()
     if letter2:         # two letters
@@ -65,6 +65,10 @@ def generateLetterAvatar(letter1, letter2=''):
         for i in range(1,int(shadow_length/SHADOW_STEP)):
             d.text((text_x+i*SHADOW_STEP,text_y+i*SHADOW_STEP), text, font=font2, fill=makeColorHexDarker(bkg_color))
     d.text((text_x,text_y), text, font=font, fill=FONT_COLOR)
+    
+    if size != IMAGE_SIZE:
+        image = image.resize((size, size), Image.LANCZOS)  # LANCZOS supposed to be the best resizing method
+    
     image.show()
     
 
