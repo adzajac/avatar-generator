@@ -1,0 +1,29 @@
+<!doctype html>
+
+
+<html lang="en">
+<head></head>
+<body>
+    <p>REGISTER FORM</p>
+    <form acction="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.first_name.label }}
+            {{ form.first_name() }}
+        </p>
+        <p>
+            {{ form.second_name.label }}
+            {{ form.second_name() }}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+    
+    
+</body>
+
+
+
+
+</html>
