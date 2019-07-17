@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+    
+
+{% block style %}
+<style>
+    .box input {
+      outline: 0;
+      background: #f2f2f2;
+      width: 100%;
+      border: 0;
+      margin: 0 0 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .box #submit {
+      outline: 0;
+      background: #4eb152;
+      width: 100%;
+      border: 0;
+      padding: 12px;
+      color: #FFFFFF;
+      font-size: 17px;
+      cursor: pointer;
+      margin-top:20px;
+      text-transform: uppercase;
+    }
+    .box #submit:hover,.form #submit:active,.form #submit:focus {
+      background: #43A047;
+    }
+    
+    .box label {
+        display:inline-block;
+        margin-bottom: 5px;
+        opacity:0.4;
+        font-size:14px;
+        width:100%;
+        text-align:left;
+    }
+</style>
+{% endblock %}
+
+{% block content %}     
+        <h1>REGISTER FORM</h1> 
+        <form acction="" method="post" class="login-form">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.first_name.label }}
+                {{ form.first_name() }}
+            </p>
+            <p>
+                {{ form.second_name.label }}
+                {{ form.second_name() }}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>  
+{% endblock %}
+    
+    
+    

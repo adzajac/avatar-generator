@@ -1,33 +1,30 @@
-<!doctype html>
+
+{% extends "base.html" %}
+
+{% block style %}
+    <style>
+        .avatar {
+            width:256px;
+            height:256px;
+            border-radius:50%;
+            margin-top:20px;
+            margin-bottom:40px;
+        }
+        .greetings {
+            font-size: 30px;
+            margin-bottom:10px;
+            opacity: 0.4;
+        }
+        .username {
+            font-size:22px;
+            opacity: 0.6;
+        }
+    </style>
+{% endblock %}
 
 
-<html lang="en">
-<head></head>
-    
-<style>
-    .avatar {
-        width:128;
-        height:128px;
-        border-radius:50%;
-    }
-</style>
-    
-<body>
-    <p>Registration completed!</p>
-    <br><br>
-    
-    
-    
-    
-    <img src="{{ user.img_path }}" class="avatar"><br>
-    <br>
-    <div style="width:128px; text-align:center;">
-    WELCOME {{ user.first_name }} {{ user.second_name }}<br>
-        
-    </div>
-</body>
-
-
-
-
-</html>
+{% block content %}
+    <img src="{{ user.img_path }}" class="avatar">
+    <p class="greetings">WELCOME </p> 
+    <p class="username">{{ user.first_name }} {{ user.second_name }}</p>   
+{% endblock %}

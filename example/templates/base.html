@@ -1,0 +1,53 @@
+<!doctype html>
+
+
+<html lang="en">
+<head>
+    
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+    body {
+      background: white; 
+      font-family: "Roboto", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;      
+    }
+    p { margin:0; padding:0; }
+    h1 { 
+      font-size:25px; 
+      line-height: 32px;
+      opacity:0.5;
+      margin-bottom: 40px;
+    }
+    .wrapper {
+      width: 360px;
+      padding: 8% 0 0;
+      margin: auto;
+    }
+    
+    .box {
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      max-width: 360px;
+      margin: 0 auto 100px;
+      padding: 45px;
+      padding-top: 2px;
+      text-align: center;
+    }
+ </style>
+    
+ {% block style %}
+ {% endblock %}
+    
+</head>    
+
+<body>
+    <div class="wrapper">
+        <div class="box">
+        {% block content %}
+        {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
