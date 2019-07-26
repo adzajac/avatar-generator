@@ -4,15 +4,11 @@ Generates avatar image from one or two letters.
 
 ## Build with:
 Python3 
-
 Pillow - image operations
-
 Flask - example code
-
 
 ## How to run the example code
 First install dependencies.
-
 Then:
 ```powershell
 cd example
